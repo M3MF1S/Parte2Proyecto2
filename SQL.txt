@@ -1,0 +1,72 @@
+/*Proyecto2 part2 Progra3*/
+Create database p2p1P3
+Use p2p1P3
+
+
+create table Usuarios(
+Usuarioid int identity(1,1) primary key,
+Usuario nvarchar(16) not null,
+clave nvarchar(16) not null,
+Email nvarchar(32) not null,
+pNombre nvarchar(16)not null,
+sNombre nvarchar(16),
+pApellido Varchar(16) not null,
+sApellido Varchar(16),
+direccion text not null,
+telefono int not null
+) 
+
+insert into Usuarios(Usuario,clave,Email,pNombre,sNombre,pApellido,sApellido,direccion,telefono) values
+					('MDPR75','admin123','matthiasp2004@gmail.com','Matthias','David','Paniagua','Rodriguez','Sarchi,Alajuela','87746218')
+
+create table roles(
+RolId int identity(1,1) primary key,
+NombreRol nvarchar(10) not null,
+usuarioid int
+constraint FK_Usuarioid  foreign key(usuarioid) references Usuarios(usuarioid)
+)
+insert into roles(nombreRol) values('Admin')
+
+
+create table permisos(
+permisoid int identity primary key,
+npermiso nvarchar(15)not null,
+)
+
+
+create table Menus(
+MenuId int identity(1,1) primary key,
+NombreMenu nvarchar(12),
+)
+insert into menus(NombreMenu) values('Home')
+
+
+
+create table pMenus(
+permisoid int,
+menuid int,
+pMenus int identity(1,1) primary key
+constraint FK_MenuId foreign key(menuid) references Menus(menuid),
+constraint FK_permisoid foreign key (permisoid) references permisos(permisoid),
+PermisoLectura bit not null default 0,
+PermisoEscritura bit not null default 0,
+PermisoModificacion bit not null default 0,
+PErmisoEliminacion bit not null default 0,
+)
+insert into pMenus(PermisoLectura,PErmisoEliminacion,PermisoModificacion,PermisoEscritura)values
+(1,0,0,0)
+
+
+
+create table Usuariospermisos(
+uper int identity(1,1),
+Usuarioid int,
+permisoid int,
+fechaC datetime,
+frechaA datetime,
+constraint FK_Usuarioidp foreign key (usuarioid) references Usuarios(usuarioid),
+constraint FK_permisoidp foreign key (permisoid) references permisos(permisoid)
+)
+
+
+
